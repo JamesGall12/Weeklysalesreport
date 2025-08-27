@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Sales Dashboard - GreenCare & NuLeaf</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        /* Toggle Switch */
+        .location-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 200px;
+            height: 50px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 90px;
+            height: 40px;
+            background: white;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch.nuleaf .toggle-slider {
+            left: 107px;
+        }
+        
+        .toggle-labels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .toggle-labels span {
+            color: rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .toggle-switch:not(.nuleaf) .toggle-labels span:first-child {
+            color: transparent;
+        }
+        
+        .toggle-switch.nuleaf .toggle-labels span:last-child {
+            color: transparent;
+        }
+        
+        .dashboard {
+            padding: 40px;
+        }
+        
+        .location-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .location-name {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .leads .metric-number { color: #3498db; }
+        .conversion .metric-number { color: #27ae60; }
+        .bookings .metric-number { color: #e74c3c; }
+        
+        .metric-label {
+            font-size: 1.2rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .breakdown-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .breakdown-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .breakdown-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .progress-item {
+            margin-bottom: 20px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+        
+        .manual { background: linear-gradient(45deg, #3498db, #2980b9); }
+        .online { background: linear-gradient(45deg, #e74c3c, #c0392b); }
+        .natural-health { background: linear-gradient(45deg, #27ae60, #229954); }
+        .new-services { background: linear-gradient(45deg, #f39c12, #e67e22); }
+        
+        .lead-channels {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .channel-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .channel-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+        
+        .channel-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Hide inactive location data */
+        .location-data {
+            display: none;
+        }
+        
+        .location-data.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .metric-number {
+                font-size: 2.5rem;
+            }
+            
+            .dashboard {
+                padding: 20px;
+            }
+            
+            .toggle-switch {
+                width: 180px;
+                height: 45px;
+            }
+            
+            .toggle-slider {
+                width: 80px;
+                height: 35px;
+                top: 3px;
+                left: 3px;
+            }
+            
+            .toggle-switch.nuleaf .toggle-slider {
+                left: 97px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Weekly Sales Dashboard</h1>
+            <p>Aug 18-24, 2025</p>
+            
+            <div class="location-toggle">
+                <div class="toggle-switch" onclick="toggleLocation()">
+                    <div class="toggle-slider">GreenCare</div>
+                    <div class="toggle-labels">
+                        <span>GreenCare</span>
+                        <span>NuLeaf</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <!-- GreenCare Data -->
+            <div id="greencare-data" class="location-data active">
+                <div class="location-header">
+                    <h2 class="location-name">GreenCare Clinic</h2>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card leads">
+                        <div class="metric-number">240</div>
+                        <div class="metric-label">Total Leads</div>
+                    </div>
+                    
+                    <div class="metric-card conversion">
+                        <div class="metric-number">25%</div>
+                        <div class="metric-label">Conversion Rate</div>
+                    </div>
+                    
+                    <div class="metric-card bookings">
+                        <div class="metric-number">60</div>
+                        <div class="metric-label">Bookings Made</div>
+                    </div>
+                </div>
+                
+                <div class="breakdown-section">
+                    <h2 class="section-title">New Customers vs Existing Customer Follow-ups</h2>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">New Customer Bookings (60)</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>49 (82%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>11 (18%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 18%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">Existing Customer Follow-ups (151)</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>103 (68%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 68%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>48 (32%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 32%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">New Customer Service Mix</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>51 (85%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>9 (15%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">Follow-up Service Mix</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>151 (100%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>0 (0%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lead-channels">
+                    <h2 class="section-title">New Lead Generation Sources</h2>
+                    <div class="channels-grid">
+                        <div class="channel-item">
+                            <div class="channel-number">122</div>
+                            <div class="channel-label">Phone Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">37</div>
+                            <div class="channel-label">Missed Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">31</div>
+                            <div class="channel-label">Text Messages</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">26</div>
+                            <div class="channel-label">Email</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">24</div>
+                            <div class="channel-label">Webchat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NuLeaf Data -->
+            <div id="nuleaf-data" class="location-data">
+                <div class="location-header">
+                    <h2 class="location-name">NuLeaf Clinic</h2>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card leads">
+                        <div class="metric-number">133</div>
+                        <div class="metric-label">Total Leads</div>
+                    </div>
+                    
+                    <div class="metric-card conversion">
+                        <div class="metric-number">18%</div>
+                        <div class="metric-label">Conversion Rate</div>
+                    </div>
+                    
+                    <div class="metric-card bookings">
+                        <div class="metric-number">24</div>
+                        <div class="metric-label">Bookings Made</div>
+                    </div>
+                </div>
+                
+                <div class="breakdown-section">
+                    <h2 class="section-title">New Customers vs Existing Customer Follow-ups</h2>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">New Customer Bookings (24)</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>22 (92%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>2 (8%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 8%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">Existing Customer Follow-ups (5)</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>4 (80%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>1 (20%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 20%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">New Customer Service Mix</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>24 (100%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>0 (0%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h3 class="breakdown-title">Follow-up Service Mix</h3>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>5 (100%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>0 (0%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lead-channels">
+                    <h2 class="section-title">New Lead Generation Sources</h2>
+                    <div class="channels-grid">
+                        <div class="channel-item">
+                            <div class="channel-number">59</div>
+                            <div class="channel-label">Phone Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">29</div>
+                            <div class="channel-label">Email</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">25</div>
+                            <div class="channel-label">Missed Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">16</div>
+                            <div class="channel-label">Webchat</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">4</div>
+                            <div class="channel-label">Text Messages</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Report prepared by Head of Sales
+        </div>
+    </div>
+
+    <script>
+        let currentLocation = 'greencare';
+        
+        function toggleLocation() {
+            const toggleSwitch = document.querySelector('.toggle-switch');
+            const toggleSlider = document.querySelector('.toggle-slider');
+            const greencareData = document.getElementById('greencare-data');
+            const nuleafData = document.getElementById('nuleaf-data');
+            
+            if (currentLocation === 'greencare') {
+                // Switch to NuLeaf
+                currentLocation = 'nuleaf';
+                toggleSwitch.classList.add('nuleaf');
+                toggleSlider.textContent = 'NuLeaf';
+                greencareData.classList.remove('active');
+                nuleafData.classList.add('active');
+            } else {
+                // Switch to GreenCare
+                currentLocation = 'greencare';
+                toggleSwitch.classList.remove('nuleaf');
+                toggleSlider.textContent = 'GreenCare';
+                nuleafData.classList.remove('active');
+                greencareData.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
