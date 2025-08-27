@@ -177,8 +177,8 @@
         
         .breakdown-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
         
         .breakdown-card {
@@ -327,7 +327,11 @@
             <!-- GreenCare Data -->
             <div id="greencare-data" class="location-data active">
                 <div class="location-header">
-                    <h2 class="location-name">GreenCare Clinic</h2>
+                    <h2 class="location-name">GreenCare Clinics</h2>
+                </div>
+                
+                <div class="breakdown-section" style="margin-bottom: 20px;">
+                    <h3 class="section-title">Initial Bookings Report</h3>
                 </div>
                 
                 <div class="metrics-grid">
@@ -347,101 +351,8 @@
                     </div>
                 </div>
                 
-                <div class="breakdown-section">
-                    <h2 class="section-title">New Customers vs Existing Customer Follow-ups</h2>
-                    <div class="breakdown-grid">
-                        <div class="breakdown-card">
-                            <h3 class="breakdown-title">New Customer Bookings (60)</h3>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Manual</span>
-                                    <span>49 (82%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill manual" style="width: 82%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Online</span>
-                                    <span>11 (18%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill online" style="width: 18%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="breakdown-card">
-                            <h3 class="breakdown-title">Existing Customer Follow-ups (151)</h3>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Manual</span>
-                                    <span>103 (68%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill manual" style="width: 68%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Online</span>
-                                    <span>48 (32%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill online" style="width: 32%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="breakdown-card">
-                            <h3 class="breakdown-title">New Customer Service Mix</h3>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Natural Health</span>
-                                    <span>51 (85%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill natural-health" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>New Services</span>
-                                    <span>9 (15%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill new-services" style="width: 15%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="breakdown-card">
-                            <h3 class="breakdown-title">Follow-up Service Mix</h3>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Natural Health</span>
-                                    <span>151 (100%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill natural-health" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>New Services</span>
-                                    <span>0 (0%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill new-services" style="width: 0%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="lead-channels">
-                    <h2 class="section-title">New Lead Generation Sources</h2>
+                    <h4 class="section-title">New Lead Generation Sources</h4>
                     <div class="channels-grid">
                         <div class="channel-item">
                             <div class="channel-number">122</div>
@@ -465,12 +376,113 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="breakdown-section">
+                    <div class="breakdown-grid">
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">New Customer Bookings (60)</h4>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>49 (82%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>11 (18%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 18%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">New Customer Service Mix</h4>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>51 (85%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>9 (15%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breakdown-section">
+                    <h3 class="section-title">Follow Up Bookings Report</h3>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">Follow-up Sales (151)</h4>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Manual</span>
+                                    <span>103 (68%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill manual" style="width: 68%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Online</span>
+                                    <span>48 (32%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill online" style="width: 32%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">Follow-up Service Mix</h4>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>151 (100%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>0 (0%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- NuLeaf Data -->
             <div id="nuleaf-data" class="location-data">
                 <div class="location-header">
-                    <h2 class="location-name">NuLeaf Clinic</h2>
+                    <h2 class="location-name">NuLeaf Clinics</h2>
+                </div>
+                
+                <div class="breakdown-section" style="margin-bottom: 20px;">
+                    <h3 class="section-title">Initial Bookings Report</h3>
                 </div>
                 
                 <div class="metrics-grid">
@@ -490,11 +502,37 @@
                     </div>
                 </div>
                 
+                <div class="lead-channels">
+                    <h4 class="section-title">New Lead Generation Sources</h4>
+                    <div class="channels-grid">
+                        <div class="channel-item">
+                            <div class="channel-number">59</div>
+                            <div class="channel-label">Phone Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">29</div>
+                            <div class="channel-label">Email</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">25</div>
+                            <div class="channel-label">Missed Calls</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">16</div>
+                            <div class="channel-label">Webchat</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-number">4</div>
+                            <div class="channel-label">Text Messages</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="breakdown-section">
-                    <h2 class="section-title">New Customers vs Existing Customer Follow-ups</h2>
+                    <h2 class="section-title">New Customer Acquisition</h2>
                     <div class="breakdown-grid">
                         <div class="breakdown-card">
-                            <h3 class="breakdown-title">New Customer Bookings (24)</h3>
+                            <h4 class="breakdown-title">New Customer Bookings (24)</h4>
                             <div class="progress-item">
                                 <div class="progress-label">
                                     <span>Manual</span>
@@ -516,7 +554,34 @@
                         </div>
                         
                         <div class="breakdown-card">
-                            <h3 class="breakdown-title">Existing Customer Follow-ups (5)</h3>
+                            <h4 class="breakdown-title">New Customer Service Mix</h4>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Natural Health</span>
+                                    <span>24 (100%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill natural-health" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>New Services</span>
+                                    <span>0 (0%)</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill new-services" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breakdown-section">
+                    <h2 class="section-title">Existing Customer Follow-ups</h2>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">Follow-up Sales (5)</h4>
                             <div class="progress-item">
                                 <div class="progress-label">
                                     <span>Manual</span>
@@ -538,29 +603,7 @@
                         </div>
                         
                         <div class="breakdown-card">
-                            <h3 class="breakdown-title">New Customer Service Mix</h3>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>Natural Health</span>
-                                    <span>24 (100%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill natural-health" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label">
-                                    <span>New Services</span>
-                                    <span>0 (0%)</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill new-services" style="width: 0%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="breakdown-card">
-                            <h3 class="breakdown-title">Follow-up Service Mix</h3>
+                            <h4 class="breakdown-title">Follow-up Service Mix</h4>
                             <div class="progress-item">
                                 <div class="progress-label">
                                     <span>Natural Health</span>
@@ -579,32 +622,6 @@
                                     <div class="progress-fill new-services" style="width: 0%"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lead-channels">
-                    <h2 class="section-title">New Lead Generation Sources</h2>
-                    <div class="channels-grid">
-                        <div class="channel-item">
-                            <div class="channel-number">59</div>
-                            <div class="channel-label">Phone Calls</div>
-                        </div>
-                        <div class="channel-item">
-                            <div class="channel-number">29</div>
-                            <div class="channel-label">Email</div>
-                        </div>
-                        <div class="channel-item">
-                            <div class="channel-number">25</div>
-                            <div class="channel-label">Missed Calls</div>
-                        </div>
-                        <div class="channel-item">
-                            <div class="channel-number">16</div>
-                            <div class="channel-label">Webchat</div>
-                        </div>
-                        <div class="channel-item">
-                            <div class="channel-number">4</div>
-                            <div class="channel-label">Text Messages</div>
                         </div>
                     </div>
                 </div>
